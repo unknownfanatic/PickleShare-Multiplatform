@@ -42,7 +42,7 @@ A LocalSend-style peer-to-peer local network file sharing application built with
 |---|---|
 | Language | Kotlin 2.4.20 |
 | UI Framework | Compose Multiplatform 1.12.1 with Material 3 1.12.0-alpha03 |
-| Architecture | MVVM with `androidx.lifecycle` ViewModel, StateFlow, and Coroutines 1.11.0 |
+| Architecture | MVI (Model-View-Intent with `UiState`, `AppEvent`, `AppEffect`, `MainViewModel`, and StateFlow) |
 | Dependency Injection | Koin 4.2.2 (`koin-core`, `koin-compose`, `koin-compose-viewmodel`, `koin-android`) |
 | Serialization | Kotlinx Serialization JSON 1.11.0 |
 | File Picker | FileKit 0.16.0 (`filekit-core`, `filekit-dialogs`) |
@@ -86,7 +86,12 @@ PickleShareMultiplatform/
 ```
 
 ### Shared Code vs Platform Code
-- **`commonMain`**: Contains shared Compose UI (`MainScreen`), navigation state management (`MainViewModel`), dependency injection (`appModule`), transfer data models (`TransferRequest`, `Peer`), and service interfaces (`UdpBroadcastManager`, `FileTransferServer`, `FileTransferClient`).
+- **`commonMain`**: Follows an MVI design pattern:
+  - `UiState`: Holds immutable UI state.
+  - `AppEvent`: Sealed interface representing user actions (`OnSwitchMode`, `OnSendToPeer`, `OnScanSubnet`, `OnAcceptTransfer`, etc.).
+  - `AppEffect`: Sealed interface handling side effects (`OnSelectFiles`).
+  - `MainViewModel`: Exposes `uiState` (StateFlow), processes events in `handleEvent(event)`, and manages transfer flows.
+  - Also contains Compose UI (`MainScreen`), Koin DI (`appModule`), data models (`TransferRequest`, `Peer`), and service interfaces (`UdpBroadcastManager`, `FileTransferServer`, `FileTransferClient`).
 - **`androidMain` & `jvmMain`**: Implement platform service interfaces using `expect`/`actual` declarations:
   - `createUdpBroadcastManager()`: Manages UDP multicast/broadcast listeners and unicast subnet probes.
   - `createFileTransferServer()` & `createFileTransferClient()`: Embeds a socket-level HTTP server (`ServerSocket`) and client (`HttpURLConnection`) supporting chunked streaming and Gzip encoding.
