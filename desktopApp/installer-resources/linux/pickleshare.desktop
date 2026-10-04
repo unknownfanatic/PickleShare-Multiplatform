@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=PickleShare
+Comment=Local file sharing app
+Exec=/opt/pickleshare/bin/pickleshare
+Icon=/opt/pickleshare/lib/pickleshare.png
+Terminal=false
+Type=Application
+Categories=Network;
