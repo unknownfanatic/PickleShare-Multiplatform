@@ -14,7 +14,7 @@ A LocalSend-style peer-to-peer local network file sharing application built with
 | :---: | :---: |
 | ![Desktop Device Discovered](screenshots/picklesharedesktopdevicefound.png) | ![Desktop Receiver Mode](screenshots/picklesharedesktopreceivemode.png) |
 
-| Desktop - Incoming Transfer Prompt | Desktop - Transfer Complete |
+| Desktop - Ongoing Transfer | Desktop - Incoming Transfer Prompt |
 | :---: | :---: |
 | ![Desktop Transfer Ongoing](screenshots/picklesharedesktopfilereceivestarted.png) | ![Desktop Transfer Prompt](screenshots/picklesharedesktopfilereceive.png) |
 
